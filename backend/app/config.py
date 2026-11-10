@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     FRONTEND_URL: str = "http://localhost:5173"
     CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    CORS_ORIGIN_REGEX: str = ""
 
     JWT_SECRET_KEY: str = "study-buddy-dev-secret-change-in-production-9f4e2a"
     JWT_ALGORITHM: str = "HS256"
@@ -48,7 +49,11 @@ class Settings(BaseSettings):
 
     @property
     def cors_origins_list(self) -> List[str]:
-        return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+        return [
+            origin.strip().rstrip("/")
+            for origin in self.CORS_ORIGINS.split(",")
+            if origin.strip()
+        ]
 
     @property
     def max_file_size_bytes(self) -> int:

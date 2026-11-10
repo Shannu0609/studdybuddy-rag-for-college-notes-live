@@ -146,3 +146,18 @@ cd study-buddy-ai/backend
 pytest -v
 ```
 
+---
+
+## Deploying to Netlify (Frontend) + Render / Railway (Backend)
+
+Netlify hosts the React + Vite frontend (`netlify.toml` at the repository root configures the build and SPA redirects). Because the FastAPI backend uses PyMuPDF, Sentence Transformers (`all-MiniLM-L6-v2`), PyTorch, and persistent ChromaDB storage, deploy the backend as a Python/Docker service (Render or Railway):
+
+1. **Deploy the Backend** (`backend/Dockerfile` or `render.yaml`):
+   - Set `GEMINI_API_KEY`, `JWT_SECRET_KEY`, and `CORS_ORIGIN_REGEX=https://.*\.netlify\.app` (or set `CORS_ORIGINS` to your exact Netlify site URL).
+   - Mount persistent storage if using SQLite/ChromaDB locally (configured automatically in `render.yaml`).
+2. **Deploy the Frontend on Netlify**:
+   - Connect your GitHub repository in Netlify (`netlify.toml` auto-detects `base = "frontend"`, `command = "npm run build"`, `publish = "dist"`, and SPA `/* -> /index.html` redirects).
+   - Add environment variable `VITE_API_URL` in Netlify pointing to your deployed backend URL (e.g., `https://your-backend.onrender.com`).
+   - Trigger a deploy.
+
+
