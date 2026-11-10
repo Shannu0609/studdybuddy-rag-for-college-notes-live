@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-elevated: #f1f5f9;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+  }
+
+  html.dark {
+    --bg-canvas: #070b14;
+    --bg-surface: #0d1424;
+    --bg-elevated: #131c31;
+    --border-color: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+}
+
+/* Custom sleek scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+/* Clean Markdown typography inside AI responses */
+.sb-markdown h1,
+.sb-markdown h2,
+.sb-markdown h3 {
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.45rem;
+  line-height: 1.35;
+}
+
+.sb-markdown h1 {
+  font-size: 1.15rem;
+}
+
+.sb-markdown h2 {
+  font-size: 1.05rem;
+}
+
+.sb-markdown h3 {
+  font-size: 0.975rem;
+}
+
+.sb-markdown p {
+  margin-bottom: 0.65rem;
+  line-height: 1.65;
+}
+
+.sb-markdown p:last-child {
+  margin-bottom: 0;
+}
+
+.sb-markdown ul,
+.sb-markdown ol {
+  margin-left: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+
+.sb-markdown ul {
+  list-style-type: disc;
+}
+
+.sb-markdown ol {
+  list-style-type: decimal;
+}
+
+.sb-markdown li {
+  margin-bottom: 0.25rem;
+  line-height: 1.6;
+}
+
+.sb-markdown code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.84em;
+  padding: 0.14rem 0.38rem;
+  border-radius: 0.35rem;
+  background-color: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+}
+
+html:not(.dark) .sb-markdown code {
+  background-color: rgba(37, 99, 235, 0.08);
+  color: #1d4ed8;
+}
+
+.sb-markdown pre {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.65rem;
+  overflow-x: auto;
+  background-color: #070b14;
+  border: 1px solid #1e293b;
+}
+
+.sb-markdown pre code {
+  background: transparent;
+  padding: 0;
+  color: #e2e8f0;
+}
+
+.sb-markdown blockquote {
+  border-left: 3px solid #3b82f6;
+  padding-left: 0.85rem;
+  margin: 0.65rem 0;
+  color: var(--text-secondary);
+}
+
+.sb-markdown strong {
+  font-weight: 600;
+}
+
