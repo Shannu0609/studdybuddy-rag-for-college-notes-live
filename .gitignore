@@ -1,17 +1,32 @@
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
+env/
 .pytest_cache/
 
-# Backend runtime data & secrets
-backend/.env
+# Backend runtime data & databases
 backend/data/
 backend/uploads/
+*.db
+*.sqlite
+*.sqlite3
 
-# Frontend
+# Frontend & build outputs
+node_modules/
 frontend/node_modules/
+dist/
+build/
 frontend/dist/
-frontend/.env
 
+# OS & editor junk
+.DS_Store
+Thumbs.db
