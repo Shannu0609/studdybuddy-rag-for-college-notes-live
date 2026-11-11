@@ -1,3 +1,4 @@
+import inspect
 import logging
 from contextlib import asynccontextmanager
 
@@ -34,14 +35,17 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=settings.cors_origins_list,
-        allow_origin_regex=settings.CORS_ORIGIN_REGEX.strip() or None,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+    cors_kwargs = {
+        "allow_origins": settings.cors_origins_list,
+        "allow_origin_regex": settings.CORS_ORIGIN_REGEX.strip() or None,
+        "allow_credentials": True,
+        "allow_methods": ["*"],
+        "allow_headers": ["*"],
+    }
+    if "allow_private_network" in inspect.signature(CORSMiddleware.__init__).parameters:
+        cors_kwargs["allow_private_network"] = True
+
+    app.add_middleware(CORSMiddleware, **cors_kwargs)
 
     @app.get("/health", tags=["Health"])
     def health_check():

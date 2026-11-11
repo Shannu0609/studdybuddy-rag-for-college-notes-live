@@ -44,10 +44,25 @@ def _create_sample_pdf(pages_text: list[str]) -> bytes:
 
 
 def test_full_rag_workflow_and_user_isolation(test_client, monkeypatch, caplog):
-    # 1. Health check
+    # 1. Health check & CORS preflight (localhost, LAN, and Netlify previews)
     res = test_client.get("/health")
     assert res.status_code == 200
     assert res.json()["status"] == "ok"
+
+    preflight = test_client.options(
+        "/auth/register",
+        headers={
+            "Origin": "https://study-buddy-preview.netlify.app",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Private-Network": "true",
+        },
+    )
+    assert preflight.status_code == 200
+    assert (
+        preflight.headers.get("access-control-allow-origin")
+        == "https://study-buddy-preview.netlify.app"
+    )
+    assert preflight.headers.get("access-control-allow-private-network") == "true"
 
     # 2. Register Alice & Bob
     reg_a = test_client.post(
